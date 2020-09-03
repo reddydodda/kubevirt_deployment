@@ -99,6 +99,10 @@ vim /srv/salt/reclass/classes/cluster/<cluster_name>/kubernetes/networking/physi
           # Enabling ${_param:kubernetes_sriov_pf_nic1} VFs on ${_param:kubernetes_sriov_pf_nic1} PF
           echo ${_param:kubernetes_sriov_numvfs} > /sys/class/net/${_param:kubernetes_sriov_pf_nic1}/device/sriov_numvfs; sleep 2; ip link set ${_param:kubernetes_sriov_pf_nic1} up
           echo ${_param:kubernetes_sriov_numvfs} > /sys/class/net/${_param:kubernetes_sriov_pf_nic2}/device/sriov_numvfs; sleep 2; ip link set ${_param:kubernetes_sriov_pf_nic2} up
+          for i in `seq 0 ${_param:kubernetes_sriov_numvfs}`; do echo ip l set ${_param:kubernetes_sriov_pf_nic1} vf $i spoofchk off;done
+          for i in `seq 0 ${_param:kubernetes_sriov_numvfs}`; do echo ip l set ${_param:kubernetes_sriov_pf_nic2} vf $i spoofchk off;done
+          for i in `seq 0 ${_param:kubernetes_sriov_numvfs}`; do echo echo add ucast > /sys/class/net/${_param:kubernetes_sriov_pf_nic1}/device/sriov/$i/promisc;done
+          for i in `seq 0 ${_param:kubernetes_sriov_numvfs}`; do echo echo add ucast > /sys/class/net/${_param:kubernetes_sriov_pf_nic2}/device/sriov/$i/promisc;done
           exit 0
 ```
 
