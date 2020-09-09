@@ -38,13 +38,17 @@ parameters:
           enabled: true
           delegates:
             - type: bridge
-              name: bridge01
+              name: br-eth1
+              phy_interface: br-cwf
             - type: bridge
-              name: bridge02
+              name: br-ipdr
+              phy_interface: br-ipdr
             - type: sriov
               name: sriov-eth1
+              phy_interface: eno1
             - type: sriov
               name: sriov-eth2
+              phy_interface: eno2
 ```
 
 ```
